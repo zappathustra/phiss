@@ -230,7 +230,7 @@ It is convenient if you want to keep your CSS in an external file:
 $p = new Phiss(file("myfile"));
 ```
 
-### How lines are processed.
+### How lines are processed
 
 Phiss processes lines one by one (with the slight exception of nested
 declarations). Here is what happens when a line is processed:
