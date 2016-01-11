@@ -5,16 +5,16 @@ class Phiss {
 private $vars = [];
 private $raw;
 
-function __construct ($s) {
-  $this->load($s);
-}
-
 # split {{{
 # Split and trim.
 private function split ($p, $s) {
-  return array_map("trim", split($p, $s));
+  return array_map("trim", explode($p, $s));
 }
 # }}}
+
+function __construct ($s) {
+  $this->load($s);
+}
 
 # replace {{{
 # Replaces $var, $$var, ${var}, $${var} with the variable's value.
@@ -41,7 +41,7 @@ private function replace ($s, $double = false) {
 function expand ($s) {
   $a = array();
   if (preg_match("/{(.*?)}/", $s, $r)) {
-    $v = split(",", $r[1]);
+    $v = explode(",", $r[1]);
     $c = 1;
     foreach ($v as $w) {
       $a = array_merge($a, $this->expand(preg_replace("/{.*?}/", $w, $s, $c)));
@@ -62,7 +62,7 @@ private function doprint ($s) {
 # load {{{
 function load ($s) {
   if (gettype($s) == "string")
-    $s = split("\n", $s);
+    $s = explode("\n", $s);
   $this->raw = $s;
 }
 # }}}
@@ -115,6 +115,9 @@ function output () {
 
     # Blank line.
     } else {
+#      if ($inrule) echo "}\n";
+#      $inrule = false;
+#      $current = "";
       echo "\n";
     }
   }
